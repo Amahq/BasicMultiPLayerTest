@@ -7,6 +7,8 @@ using Photon.Realtime;
 using System.Linq;
 using System;
 using UnityEngine.SceneManagement;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
+
 
 public class PTLauncher : MonoBehaviourPunCallbacks
 {
@@ -38,11 +40,18 @@ public class PTLauncher : MonoBehaviourPunCallbacks
     // Start is called before the first frame update
     void Start()
     {
-        if(GlobalData.matchmode == MatchModes.MultiPlayer)
+        if(SceneManager.GetActiveScene().name == "Lobby Room")
         {
-            PhotonNetwork.ConnectUsingSettings();
-            MenuManager.Instance.OpenMenu("loading");
-            PTRoomManager.Instance.OnDifficultyChange += OnChangedDifficulty;
+            if (GlobalData.matchmode == MatchModes.MultiPlayer)
+            {
+                PhotonNetwork.ConnectUsingSettings();
+                MenuManager.Instance.OpenMenu("loading");
+                PTRoomManager.Instance.OnDifficultyChange += OnChangedDifficulty;
+            }
+            else
+            {
+                MenuManager.Instance.OpenMenu("game options");
+            }
         }
     }
 
@@ -50,6 +59,7 @@ public class PTLauncher : MonoBehaviourPunCallbacks
     {
         RoomOptions ro = new RoomOptions();
         ro.MaxPlayers = 2;
+        ro.IsOpen = true;
         PhotonNetwork.JoinRandomOrCreateRoom(null,2, MatchmakingMode.FillRoom,null,null,null,ro,null);
     }
 
@@ -93,6 +103,7 @@ public class PTLauncher : MonoBehaviourPunCallbacks
         }
         RoomOptions ro = new RoomOptions();
         ro.MaxPlayers = 2;
+        ro.IsOpen = true;
         PhotonNetwork.CreateRoom(roomNameInputField.text,ro);
         MenuManager.Instance.OpenMenu("loading");
     }
@@ -149,6 +160,7 @@ public class PTLauncher : MonoBehaviourPunCallbacks
     public void StartGame()
     {
         PTRoomManager.Instance.OnDifficultyChange -= OnChangedDifficulty;
+        PhotonNetwork.CurrentRoom.IsOpen = false;
         PhotonNetwork.LoadLevel("Game");
     }
 

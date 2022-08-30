@@ -49,6 +49,8 @@ public class PTRoomManager : MonoBehaviourPunCallbacks, IPunObservable
 
     public override void OnDisconnected(DisconnectCause cause)
     {
+        Destroy(MenuManager.Instance);
+        Destroy(PTLauncher.Instance);
         Destroy(gameObject);
     }
 

@@ -13,13 +13,13 @@ public class UiManagerMainMenu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        username.text = GlobalData.Username;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void SinglePlayerStart()

@@ -7,7 +7,7 @@ public class Menu : MonoBehaviour
     public string menuName;
     public bool open;
 
-    public void Open()
+    public virtual void Open()
     {
         open = true;
         gameObject.SetActive(true);

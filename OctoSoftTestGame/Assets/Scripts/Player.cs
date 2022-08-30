@@ -70,14 +70,17 @@ public class Player : MonoBehaviourPunCallbacks
     // Start is called before the first frame update
     void Start()
     {
-        if (!PV.IsMine)
+        if(GlobalData.matchmode == MatchModes.MultiPlayer)
         {
-            GlobalData.CurrentMM.PlayerSetupMP(this, PlayerType.Remote);
-            //Destroy(GetComponentInChildren<Camera>().gameObject);
-        }
-        else
-        {
-            GlobalData.CurrentMM.PlayerSetupMP(this, PlayerType.Local);
+            if (!PV.IsMine)
+            {
+                GlobalData.CurrentMM.PlayerSetupMP(this, PlayerType.Remote);
+                //Destroy(GetComponentInChildren<Camera>().gameObject);
+            }
+            else
+            {
+                GlobalData.CurrentMM.PlayerSetupMP(this, PlayerType.Local);
+            }
         }
     }
 

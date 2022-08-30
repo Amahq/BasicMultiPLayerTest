@@ -5,7 +5,7 @@ using System;
 
 public static class GlobalData
 {
-    private static string _username;
+    private static string _username = "";
     public static MatchModes matchmode;
     public static MatchManager CurrentMM;
 

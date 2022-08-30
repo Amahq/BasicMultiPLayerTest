@@ -17,16 +17,20 @@ public class GameOptions : MonoBehaviour
         }
     }
 
+    //public override void OnJoinedRoom()
+    //{
+    //    if (GlobalData.matchmode == MatchModes.MultiPlayer)
+    //    {
+    //        foreach (Transform t in gameObject.GetComponentInChildren<Transform>())
+    //        {
+    //            t.gameObject.SetActive(PhotonNetwork.IsMasterClient);
+    //        }
+    //    }
+    //}
+
     // Start is called before the first frame update
     void Start()
     {
-        if (GlobalData.matchmode == MatchModes.MultiPlayer)
-        {
-            foreach(Transform t in gameObject.GetComponentInChildren<Transform>())
-            {
-                t.gameObject.SetActive(PhotonNetwork.IsMasterClient);
-            }
-        }
     }
 
     // Update is called once per frame

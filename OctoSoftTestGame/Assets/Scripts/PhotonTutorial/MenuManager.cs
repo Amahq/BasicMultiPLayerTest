@@ -6,6 +6,12 @@ public class MenuManager : MonoBehaviour
 {
     public static MenuManager Instance;
 
+    public static void ResetMM()
+    {
+        Destroy(Instance);
+        Instance = new MenuManager();
+    }
+
     [SerializeField] Menu[] menus;
 
     private void Awake()

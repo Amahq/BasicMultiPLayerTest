@@ -25,17 +25,25 @@ public class MatchManager : MonoBehaviour
 
     public void ReturnToMainMenu()
     {
-        try
+        if(GlobalData.matchmode == MatchModes.MultiPlayer)
         {
-            foreach (Photon.Realtime.Player p in PhotonNetwork.PlayerList)
+            try
             {
-                PhotonNetwork.DestroyPlayerObjects(System.Convert.ToInt32(p.UserId));
+                foreach (Photon.Realtime.Player p in PhotonNetwork.PlayerList)
+                {
+                    PhotonNetwork.DestroyPlayerObjects(System.Convert.ToInt32(p.UserId));
+                }
             }
-        }
-        catch { }
+            catch { }
 
-        PhotonNetwork.Disconnect();
-        //Destroy(PTRoomManager.Instance);
+            PhotonNetwork.Disconnect();
+        }
+        else
+        {
+            Destroy(MenuManager.Instance);
+            Destroy(PTLauncher.Instance);
+            Destroy(PTRoomManager.Instance.gameObject);
+        }
     }
 
     public void PlayerWin(Player winner)
@@ -46,6 +54,17 @@ public class MatchManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 
+    }
+
+    public void PlayerSetupSP()
+    {
+        _localplayer = Instantiate<GameObject>(PlayerPrefab, SinglePlayerCamera.transform.position, SinglePlayerCamera.transform.rotation).GetComponent<Player>();
+        _localplayer.cam = SinglePlayerCamera;
+        ui.gameObject.GetComponent<Canvas>().worldCamera = SinglePlayerCamera;
+        _localplayer.tag = "LocalPlayer";
+        _localplayer.mm = this;
+        _localplayer.ui = ui;
+        ui.player = _localplayer;
     }
 
     public void PlayerSetupMP(Player player, PlayerType playertype)
@@ -135,13 +154,7 @@ public class MatchManager : MonoBehaviour
         }
         else
         {
-            _localplayer = Instantiate<GameObject>(PlayerPrefab, SinglePlayerCamera.transform.position, SinglePlayerCamera.transform.rotation).GetComponent<Player>();
-            _localplayer.cam = SinglePlayerCamera;
-            ui.gameObject.GetComponent<Canvas>().worldCamera = SinglePlayerCamera;
-            _localplayer.tag = "LocalPlayer";
-            _localplayer.mm = this;
-            _localplayer.ui = ui;
-            ui.player = _localplayer;
+            PlayerSetupSP();
         }
 
         SinglePlayerCamera.gameObject.SetActive(!_ismultiplayer);
