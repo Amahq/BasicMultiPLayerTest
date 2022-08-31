@@ -117,6 +117,9 @@ MonoBehaviour:
   ScoreModifierOnMiss: -1
   AmountOfClicksToClear: 1
   DecayTime: 5
+  fxAddPoints: {fileID: 6790543500886727636, guid: f2802715107cca946a13a400905bc78e, type: 3}
+  fxLosePoints: {fileID: 6790543500886727636, guid: 63ef1979a31fa954fb3d6b4b954285bb, type: 3}
+  fxOnClick: {fileID: 6790543500886727636, guid: 15a9325e981b81c449ef4492949803df, type: 3}
 --- !u!114 &-3867613133747651140
 MonoBehaviour:
   m_ObjectHideFlags: 0

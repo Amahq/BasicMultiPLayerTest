@@ -8,7 +8,6 @@ public class UiManagerMainMenu : MonoBehaviour
 {
 
     public TMP_InputField username;
-    //public GlobalManager GM;
 
     // Start is called before the first frame update
     void Start()
@@ -27,7 +26,6 @@ public class UiManagerMainMenu : MonoBehaviour
         GlobalData.Username = username.text;
         GlobalData.matchmode = MatchModes.SinglePlayer;
         SceneManager.LoadSceneAsync("Lobby Room");
-        //SceneManager.LoadSceneAsync("Game");
     }
 
     public void MultiPlayerStart()
@@ -35,7 +33,6 @@ public class UiManagerMainMenu : MonoBehaviour
         GlobalData.Username = username.text;
         GlobalData.matchmode = MatchModes.MultiPlayer;
         SceneManager.LoadSceneAsync("Lobby Room");
-        //SceneManager.LoadSceneAsync("Game");
 
     }
 }

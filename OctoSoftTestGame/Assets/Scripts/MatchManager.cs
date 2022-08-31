@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using UnityEngine.SceneManagement;
+using System;
 
 public class MatchManager : MonoBehaviour
 {
@@ -19,8 +20,14 @@ public class MatchManager : MonoBehaviour
     public UIManagerIngame ui;
     public UIManagerIngame uimp;
     public GameObject WinScreen;
+    public TMPro.TMP_Text txtRemainingTime;
+    public TMPro.TMP_Text txtGameOutcome;
     public TMPro.TMP_Text txtWinnerName;
     public bool isgamefinished = false;
+    private System.Diagnostics.Stopwatch st;
+    private TimeSpan remainingtime;
+    TimeSpan MatchDurationTime;
+
 
 
     public void ReturnToMainMenu()
@@ -46,14 +53,23 @@ public class MatchManager : MonoBehaviour
         }
     }
 
+    public void GameOver()
+    {
+        isgamefinished = true;
+        WinScreen.SetActive(true);
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        txtGameOutcome.text = "Game Over";
+        txtWinnerName.text = "You Lose";
+    }
+
     public void PlayerWin(Player winner)
     {
         isgamefinished = true;
         WinScreen.SetActive(true);
-        txtWinnerName.text = winner.Username;
+        txtWinnerName.text = winner.Username + " - Won";
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
-
     }
 
     public void PlayerSetupSP()
@@ -162,14 +178,43 @@ public class MatchManager : MonoBehaviour
         MultiPlayerCameraRemote.gameObject.SetActive(_ismultiplayer);
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = false;
+        st = System.Diagnostics.Stopwatch.StartNew();
+        MatchDurationTime = new TimeSpan(0, 0, (int)MatchDuration);
+        Timer();
     }
 
+    private void Timer()
+    {
+        if (isgamefinished)
+        {
+            return;
+        }
+        remainingtime = MatchDurationTime - st.Elapsed;
+        txtRemainingTime.text = remainingtime.ToString("mm':'ss':'fff");
 
+        if(remainingtime.TotalSeconds <= 0 && GlobalData.matchmode == MatchModes.SinglePlayer)
+        {
+            GameOver();
+        }
+        else if(remainingtime.TotalSeconds <= 0 && GlobalData.matchmode == MatchModes.MultiPlayer)
+        {
+            txtGameOutcome.text = "Congratulations!!";
+
+            if (_localplayer.Score > _remoteplayer.Score)
+            {
+                PlayerWin(_localplayer);
+            }
+            else
+            {
+                GameOver();
+            }
+        }
+    }
 
     // Update is called once per frame
     void Update()
     {
-        
+        Timer();
     }
 
     public void ModifyScore(float value, PlayerType type)
@@ -178,11 +223,6 @@ public class MatchManager : MonoBehaviour
         {
             _localplayer.Score += value;
         }
-        else
-        {
-            //_remoteplayer.Score += value;
-        }
-        //UpdateUI();
     }
 
     public void UpdateUI()
@@ -200,53 +240,5 @@ public class MatchManager : MonoBehaviour
             _remoteplayer.ui.Refresh();
         }
         catch { }
-        return;
-        //if (PhotonNetwork.IsMasterClient)
-        //{
-        //    try
-        //    {
-        //        ui.UpdateScore(_localplayer.Score);
-        //        ui.updateUsername(_localplayer.Username);
-        //    }
-        //    catch (System.Exception e)
-        //    {
-        //        Debug.Log("Failed to update UI with local player score: " + e.Message);
-        //    }
-
-        //    try
-        //    {
-        //        uimp.UpdateScore(_remoteplayer.Score);
-        //        uimp.updateUsername(_remoteplayer.Username);
-        //    }
-        //    catch (System.Exception e)
-        //    {
-        //        Debug.Log("Failed to update UI with remote player score: " + e.Message);
-        //    }
-
-        //}
-        //else
-        //{
-        //    try
-        //    {
-        //        ui.UpdateScore(_remoteplayer.Score);
-        //        ui.updateUsername(_remoteplayer.Username);
-        //    }
-        //    catch (System.Exception e)
-        //    {
-        //        Debug.Log("Failed to update UI with local player score: " + e.Message);
-        //    }
-
-        //    try
-        //    {
-        //        uimp.UpdateScore(_localplayer.Score);
-        //        uimp.updateUsername(_localplayer.Username);
-        //    }
-        //    catch (System.Exception e)
-        //    {
-        //        Debug.Log("Failed to update UI with remote player score: " + e.Message);
-        //    }
-
-        //}
-
     }
 }

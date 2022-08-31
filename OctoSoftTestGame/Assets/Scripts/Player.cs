@@ -46,7 +46,6 @@ public class Player : MonoBehaviourPunCallbacks
 
     public override void OnPlayerPropertiesUpdate(Photon.Realtime.Player targetPlayer, Hashtable changedProps)
     {
-        //Debug.Log("PlayerPropertiesChanged catched by ("+this.Username+") - triggered by (" + changedProps["nickname"].ToString() + ") - with value : " + (float)changedProps["score"]);
         if(this.Username == changedProps["nickname"].ToString())
         {
             _score = (float)changedProps["score"];
@@ -56,10 +55,6 @@ public class Player : MonoBehaviourPunCallbacks
                 GlobalData.CurrentMM.PlayerWin(this);
             }
         }
-        //if (!PV.IsMine)
-        //{
-        //    Debug.Log("Score changed: " + (float)changedProps["score"]);
-        //}
     }
 
     private void Awake()
@@ -75,7 +70,6 @@ public class Player : MonoBehaviourPunCallbacks
             if (!PV.IsMine)
             {
                 GlobalData.CurrentMM.PlayerSetupMP(this, PlayerType.Remote);
-                //Destroy(GetComponentInChildren<Camera>().gameObject);
             }
             else
             {

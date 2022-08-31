@@ -10,23 +10,6 @@ public class UIManagerIngame : MonoBehaviour
     public TMP_Text txtScore;
     public Player player;
 
-    private void Awake()
-    {
-        //GlobalData.OnUsernameChanged += OnUsernameChanged;
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     private void OnUsernameChanged(object sender, System.EventArgs e)
     {
         GlobalEvents ge = (GlobalEvents)e;

@@ -5,11 +5,12 @@ using System;
 
 public class TargetObject : InteractableObject
 {
+
+    [Header("Target Specific")]
     public GameObject ObjectToBeQueued;
     public float AmountOfItemsTobeQueued;
 
     public override event EventHandler evtOnClear;
-    public override event EventHandler evtOnDecayFinished;
 
     public override void OnClick()
     {
@@ -23,7 +24,6 @@ public class TargetObject : InteractableObject
 
     public override void OnClear()
     {
-        //Debug.Log("Special Clear");
         base.VisualFeedback(TypesOfVisualFeedback.cleared);
         EventHandler handler = evtOnClear;
         TargetEvents args = new TargetEvents();

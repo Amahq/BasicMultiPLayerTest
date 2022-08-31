@@ -35,17 +35,6 @@ public class PTPlayerManager : MonoBehaviour
 
     void CreateController()
     {
-        Vector3 position = Vector3.zero;
-        
-        Debug.Log("Controller Created");
-        if (!PV.IsMine)
-        {
-            
-        }
-        else
-        {
-
-        }
-        PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Player"), position, Quaternion.identity);
+        PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Player"), Vector3.zero, Quaternion.identity);
     }
 }

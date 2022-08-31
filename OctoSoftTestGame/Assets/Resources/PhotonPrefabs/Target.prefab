@@ -147,9 +147,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ID: 0
   ScoreModifierOnClear: 0
-  ScoreModifierOnMiss: 0
+  ScoreModifierOnMiss: -10
   AmountOfClicksToClear: 1
   DecayTime: 5
+  fxAddPoints: {fileID: 6790543500886727636, guid: f2802715107cca946a13a400905bc78e, type: 3}
+  fxLosePoints: {fileID: 6790543500886727636, guid: 63ef1979a31fa954fb3d6b4b954285bb, type: 3}
+  fxOnClick: {fileID: 6790543500886727636, guid: 15a9325e981b81c449ef4492949803df, type: 3}
   ObjectToBeQueued: {fileID: 1591165099382186, guid: 38713edbf3b2272469e3b958147f7361, type: 3}
   AmountOfItemsTobeQueued: 3
 --- !u!114 &1659815844853494513

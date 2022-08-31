@@ -77,7 +77,6 @@ public class ObjectManager : MonoBehaviour
             mm.ModifyScore(oe.ScoreModifier, oe.type);
             GameObject missedobject;
             SpawnedObjects.TryGetValue(oe.ID, out missedobject);
-            //GameObject.DestroyImmediate(missedobject);
             PhotonNetwork.Destroy(missedobject);
             SpawnedObjects.Remove(oe.ID);
         }
@@ -90,7 +89,6 @@ public class ObjectManager : MonoBehaviour
             return;
         }
 
-        //Debug.Log("Object Cleared");
         GameObject clearedobject;
         if(GlobalData.matchmode == MatchModes.SinglePlayer)
         {
@@ -100,7 +98,6 @@ public class ObjectManager : MonoBehaviour
             try
             {
                 TargetEvents te = (TargetEvents)e;
-                //Debug.Log("Target ID (" + te.ID + ")");
 
                 if (te.ObjectToBeQueued != null)
                 {
@@ -114,11 +111,9 @@ public class ObjectManager : MonoBehaviour
             {
                 Debug.Log(ex.Message);
             }
-            //Debug.Log("Object ID (" + re.ID+")");
             SpawnedObjects.TryGetValue(re.ID, out clearedobject);
             GameObject.DestroyImmediate(clearedobject);
             SpawnedObjects.Remove(re.ID);
-            //clearedobject.GetComponent<InteractableObject>().evtOnClear -= OnObjectCleared;
         }
         else
         {
@@ -132,7 +127,6 @@ public class ObjectManager : MonoBehaviour
             try
             {
                 TargetEvents te = (TargetEvents)e;
-                //Debug.Log("Target ID (" + te.ID + ")");
 
                 if (te.ObjectToBeQueued != null)
                 {
@@ -146,12 +140,9 @@ public class ObjectManager : MonoBehaviour
             {
                 Debug.Log(ex.Message);
             }
-            //Debug.Log("Object ID (" + re.ID+")");
             SpawnedObjects.TryGetValue(re.ID, out clearedobject);
-            //GameObject.DestroyImmediate(clearedobject);
             PhotonNetwork.Destroy(clearedobject);
             SpawnedObjects.Remove(re.ID);
-            //clearedobject.GetComponent<InteractableObject>().evtOnClear -= OnObjectCleared;
         }
     }
 
